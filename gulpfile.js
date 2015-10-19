@@ -31,14 +31,8 @@ gulp.task('js', function () {
     .pipe(gulp.dest('build/'));
 });
 
-//
-gulp.task('build', ['js'], function(){
-  return gulp.src('build/**/*.js')
-    .pipe(gulp.dest('build/'));
-});
-
 // Webpack compile task
-gulp.task('pack', ['build', 'css'], function(){
+gulp.task('pack', ['js', 'css'], function(){
   return gulp.src('build/index.js')
     .pipe(webpack({
       output: {
@@ -47,14 +41,14 @@ gulp.task('pack', ['build', 'css'], function(){
       }
     }))
     .on('error', onError)
-    .pipe(uglify())
+    // .pipe(uglify())
     .on('error', onError)
     .pipe(gulp.dest('build/'));
 })
 
 // Watch task
 gulp.task('watch', function(){
-  gulp.watch(['src/**/*.js', 'src/**/*.+(scss|sass)'], ['pack']);
+  gulp.watch(['js/**/*.js', 'sass/**/*.+(scss|sass)'], ['pack']);
 });
 
 // Default task
