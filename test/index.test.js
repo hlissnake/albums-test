@@ -34,7 +34,7 @@ var Photos = require('../build/views/photos');
 var Photo = require('../build/views/photo');
 
 var ReactTestUtils = require('react-addons-test-utils'); 
-var ShallowRenderer = ReactTestUtils.createRenderer(); console.log(ShallowRenderer);
+var ShallowRenderer = ReactTestUtils.createRenderer();
 
 /**
  * BDD Test case for React UI, according to the Mocking Data.
@@ -72,7 +72,7 @@ describe('albums webapp by React', function(){
 								describe('when click a thumbnail', function(){
 
 									it('show full sized photo', function(){
-										
+
 									});
 
 								});
