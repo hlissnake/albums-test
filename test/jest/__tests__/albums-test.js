@@ -1,11 +1,11 @@
-jest.dontMock('../../js/views/albums.js');
+jest.dontMock('../../../js/views/albums.js');
 
 describe('albums component', function() {
     
     var TestUtils = require('react-addons-test-utils');
     var ReactDOM = require('react-dom');
     var React = require('react');
-    var Albums = require('../../js/views/albums.js');
+    var Albums = require('../../../js/views/albums.js');
 
     var MockingData = [
 		{
@@ -32,40 +32,38 @@ describe('albums component', function() {
 
     // Render a checkbox with label in the document
     var albums = TestUtils.renderIntoDocument(
-    	<Albums photo={MockingData} />
+    	<Albums list={MockingData} />
     );
 
     // Album items in Albums component
-    var albumItems = TestUtils.findRenderedDOMComponentWithClass(
+    var albumItems = TestUtils.scryRenderedDOMComponentsWithClass(
       albums, 'album-item');
 
-  	it('display albums list information correctly', function() {
-    	// Verify that it's url is correct
-
-	    expect(ReactDOM.findDOMNode(albumItems).length).toEqual( 4 );
+  	it('should display albums list information correctly', function() {
+    	// Verify that albums list has correct number as the mocking data
+	    expect(albumItems.length).toEqual( 4 );
 
 	});
 
-  	it('display photos list after click one album', function() {
+  	it('should display photos list after click one album', function() {
 
 	    TestUtils.Simulate.click( albumItems[0] );
 
-	    photo.test_callback = function(){
-
-	    	var photoItems = TestUtils.findRenderedDOMComponentWithClass(
+	    // albums asyn callback of photos loading
+	    albums.test_callback = function(){
+	    	var photoItems = TestUtils.scryRenderedDOMComponentsWithClass(
       			albums, 'photo-item');
 
-	    	expect( ReactDOM.findDOMNode(photoItems).length > 0 ).toEqual( true );
+	    	expect( photoItems.length > 0 ).toEqual( true );
 	    }
 	});
 
-  	it('show selected class after click another album', function() {
+  	it('should show selected class after click another album', function() {
 
 	    TestUtils.Simulate.click( albumItems[1] );
 
-	    expect( ReactDOM.findDOMNode(albumItems[1]).className.indexOf('selected') ).toEqual( true );
+	    expect( ReactDOM.findDOMNode(albumItems[1]).className.indexOf('selected') > -1 ).toEqual( true );
 
 	});
 
-  });
 });

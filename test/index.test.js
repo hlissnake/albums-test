@@ -62,7 +62,7 @@ describe('Albums webapp by React', function(){
 
 							describe('When click this album ', function(){
 
-								it('Should its photos will be showed, with 2 photo items in the list', function(done){
+								it('Should show photos, with 2 photo items in the list', function(done){
 									// var dom = albumElement.refs.el;
 									// ReactTestUtils.Simulate.click(dom);
 									Models.getPhotos(albums[index].id, function(photos){

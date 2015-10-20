@@ -19751,17 +19751,6 @@ return /******/ (function(modules) { // webpackBootstrap
 			}
 		},
 
-		// componentWillReceiveProps : function(){
-		// 	var me = this;
-		// 	if(this.props.albumId) {
-		// 		Models.getPhotos(this.props.albumId, function(photos){
-		// 			me.setState({
-		// 				'photos' : photos
-		// 			})
-		// 		});
-		// 	}
-		// },
-
 		render : function(){
 
 			return (
@@ -19794,7 +19783,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		 * on click the thumbnail, load the full size image
 		 **/
 		onClick : function(){
-			var img = this.refs.fullSize;
+			var img = this.refs.fullsize;
 			img.onload = function(){
 				img.classList.remove('hidden');
 				this.test_callback && this.test_callback();
@@ -19820,7 +19809,7 @@ return /******/ (function(modules) { // webpackBootstrap
 						onClick: this.onClick, 
 						src: this.props.photo.thumbnailUrl}), 
 
-					React.createElement("img", {ref: "fullSize", 
+					React.createElement("img", {ref: "fullsize", 
 						className: "full-size hidden", 
 						onClick: this.hide})
 				)

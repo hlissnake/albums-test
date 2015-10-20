@@ -2,8 +2,6 @@
 
 You can see the unit-testing result in Travis [![Travis CI](https://travis-ci.org/hlissnake/albums-test.svg?branch=master)](https://travis-ci.org/hlissnake/albums-test)
 
-View the demo online [http://hlissnake.github.io/albums-test/](http://hlissnake.github.io/albums-test/)
-
 #### Architecture:
 * React.js for UI Components.
 * SCSS preprocessor of css.
@@ -18,5 +16,8 @@ run `npm start` in CLI to open the demo
 
 run `npm test` in CLI to run testing case for data models
 
-you can get into `test/jest/` folder, and run `npm test` to run Jest testing, especially for React UI Component.
-React Comps interaction is very complex in testing, so I just add two case for them.
+you can CLI into `test/jest/` folder, and run `npm test` to run Jest testing, especially for React UI Component.
+
+Communication between multiple components in React is not easy for testing, so I just tested two isolated component as well. (Refs issue of multiple React loaded, be waiting to be fix)
+
+I probably need to add lazy-loading for thumbnail images, which is quite so much.

@@ -7,7 +7,7 @@ var Photo = React.createClass({
 	 * on click the thumbnail, load the full size image
 	 **/
 	onClick : function(){
-		var img = this.refs.fullSize;
+		var img = this.refs.fullsize;
 		img.onload = function(){
 			img.classList.remove('hidden');
 			this.test_callback && this.test_callback();
@@ -33,7 +33,7 @@ var Photo = React.createClass({
 					onClick={this.onClick} 
 					src={this.props.photo.thumbnailUrl}/>
 
-				<img ref="fullSize" 
+				<img ref="fullsize" 
 					className="full-size hidden" 
 					onClick={this.hide}/>
 			</div>
