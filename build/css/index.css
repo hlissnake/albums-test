@@ -71,6 +71,8 @@
           list-style-type: none;
           margin: 4px;
           padding: 12px; }
+          #container .albums-container .albums .album-list .album-item.selected {
+            background: #d4d4d4; }
           #container .albums-container .albums .album-list .album-item .album-item-title {
             display: block;
             font-size: 18px;

@@ -10,6 +10,7 @@ var Photo = React.createClass({
 		var img = this.refs.fullSize;
 		img.onload = function(){
 			img.classList.remove('hidden');
+			this.test_callback && this.test_callback();
 		}
 		img.src = this.props.photo.url;
 	},

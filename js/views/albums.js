@@ -18,6 +18,7 @@ var Albums = React.createClass({
 	 **/
 	showPhoto : function(albumId){
 
+		this.selectAlbumId = albumId
 		this.setState({
 			'photos' : [],
 			'loading' : true
@@ -28,7 +29,9 @@ var Albums = React.createClass({
 			this.setState({
 				'photos' : photos,
 				'loading' : false
-			})
+			});
+			// for testing the inner event callback
+			this.test_callback && this.test_callback();
 		}.bind(this));
 	},
 
@@ -41,7 +44,11 @@ var Albums = React.createClass({
 				{
 					this.props.list.map(function(album, i){
 						return (
-							<Album album={album} onAlbumClick={this.showPhoto} key={i}/>
+							<Album 
+								album={album} 
+								selected={ album.id == this.selectAlbumId ? true : false } 
+								onAlbumClick={this.showPhoto} 
+								key={i} />
 						)
 					}.bind(this))
 				}

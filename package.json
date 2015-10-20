@@ -4,6 +4,8 @@
   "description": "an albums web application for test",
   "main": "index.js",
   "scripts": {
+    "prestart": "npm install",
+    "start" : "open index.html",
     "pretest": "npm install",
     "test": "mocha -t 10000"
   },

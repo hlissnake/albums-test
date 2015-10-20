@@ -21,28 +21,25 @@ Mock(Models, 'getUsers', function(userIds, callback){
 });
 
 // Mock for photos http request
-Mock(Models, 'getPhotos', function(albumIds, callback){
+Mock(Models, 'getPhotos', function(albumId, callback){
 	// Asynchronous callback for testing
 	process.nextTick(function () {
-	    callback(MockData.photos);
+		var result = [];
+		for(var i = 0; i < MockData.photos.length; i++) {
+			if(albumId == MockData.photos[i].albumId) {
+				result.push(MockData.photos);
+			}
+		}
+	    callback(result);
 	});
 });
-
-// React component to test UI behavior
-var Albums = require('../build/views/albums');
-var Album = require('../build/views/album');
-var Photos = require('../build/views/photos');
-var Photo = require('../build/views/photo');
-
-var ReactTestUtils = require('react-addons-test-utils'); 
-var ShallowRenderer = ReactTestUtils.createRenderer();
 
 /**
  * BDD Test case for React UI, according to the mocking data.
  **/
 describe('Albums webapp by React', function(){
 
-	describe('Initialize albums title list', function(){
+	describe('Initialize albums title list and load the mocking data', function(){
 
 		it('Should have 4 albums in the list', function(done){
 
@@ -57,8 +54,6 @@ describe('Albums webapp by React', function(){
 					// Fix closure issue
 					(function(index){
 
-						// var albumElement = new Album();
-
 						describe('The album with id "' + index + '"', function(){
 
 							it("Should show the user name of this album", function(){
@@ -67,16 +62,16 @@ describe('Albums webapp by React', function(){
 
 							describe('When click this album ', function(){
 
-								it('Should its photos will be showed', function(){
+								it('Should its photos will be showed, with 2 photo items in the list', function(done){
 									// var dom = albumElement.refs.el;
 									// ReactTestUtils.Simulate.click(dom);
+									Models.getPhotos(albums[index].id, function(photos){
+										should(photos.length).equal( 2 );
+										done();
+									});
 								});
 
-								describe('When click a thumbnail in photos', function(){
-
-									it('Should show full sized photo', function(){
-										
-									});
+								describe('When click a thumbnail in photos (changing into jest test practicular for React UI)', function(){
 
 								});
 

@@ -19663,6 +19663,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		 **/
 		showPhoto : function(albumId){
 
+			this.selectAlbumId = albumId
 			this.setState({
 				'photos' : [],
 				'loading' : true
@@ -19673,7 +19674,9 @@ return /******/ (function(modules) { // webpackBootstrap
 				this.setState({
 					'photos' : photos,
 					'loading' : false
-				})
+				});
+				// for testing the inner event callback
+				this.test_callback && this.test_callback();
 			}.bind(this));
 		},
 
@@ -19686,7 +19689,11 @@ return /******/ (function(modules) { // webpackBootstrap
 					
 						this.props.list.map(function(album, i){
 							return (
-								React.createElement(Album, {album: album, onAlbumClick: this.showPhoto, key: i})
+								React.createElement(Album, {
+									album: album, 
+									selected:  album.id == this.selectAlbumId ? true : false, 
+									onAlbumClick: this.showPhoto, 
+									key: i})
 							)
 						}.bind(this))
 					
@@ -19712,13 +19719,13 @@ return /******/ (function(modules) { // webpackBootstrap
 			this.props.onAlbumClick(this.props.album.id);
 		},
 
-		shouldComponentUpdate : function(){
-			return false;
+		shouldComponentUpdate : function(nextProps){
+			return this.props.selected != nextProps.selected;
 		},
 
 		render : function(){
 			return (
-				React.createElement("div", {className: "album-item", onClick: this.onClick}, 
+				React.createElement("div", {className: "album-item" + (this.props.selected ? ' selected' : ''), onClick: this.onClick}, 
 					React.createElement("span", {className: "album-item-title"}, this.props.album.title), 
 					React.createElement("span", {className: "album-item-name"}, "User: ", this.props.album.name)
 				)
@@ -19790,6 +19797,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			var img = this.refs.fullSize;
 			img.onload = function(){
 				img.classList.remove('hidden');
+				this.test_callback && this.test_callback();
 			}
 			img.src = this.props.photo.url;
 		},
