@@ -10,17 +10,6 @@ var Photos = React.createClass({displayName: "Photos",
 		}
 	},
 
-	// componentWillReceiveProps : function(){
-	// 	var me = this;
-	// 	if(this.props.albumId) {
-	// 		Models.getPhotos(this.props.albumId, function(photos){
-	// 			me.setState({
-	// 				'photos' : photos
-	// 			})
-	// 		});
-	// 	}
-	// },
-
 	render : function(){
 
 		return (

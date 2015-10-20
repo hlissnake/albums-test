@@ -1,11 +1,11 @@
-jest.dontMock('../../js/views/photo.js');
+jest.dontMock('../../../js/views/photo.js');
 
 describe('photo component', function() {
     
     var TestUtils = require('react-addons-test-utils');
     var ReactDOM = require('react-dom');
     var React = require('react');
-    var Photo = require('../../js/views/photo.js');
+    var Photo = require('../../../js/views/photo.js');
 
     var MockingData = {
 	    "albumId": 1,
@@ -17,10 +17,10 @@ describe('photo component', function() {
 
     // Render a checkbox with label in the document
     var photo = TestUtils.renderIntoDocument(
-      <Photo photo={MockingData} />
+    	<Photo photo={MockingData} />
     );
 
-  	it('display photo information correctly', function() {
+  	it('should display photo information correctly', function() {
     // Verify that it's url is correct
 	    var thumbnail = TestUtils.findRenderedDOMComponentWithClass(
 	      photo, 'thumbnail');
@@ -29,7 +29,7 @@ describe('photo component', function() {
 
 	});
 
-  	it('display full size photo after click', function() {
+  	it('should display full size photo after click', function() {
 	    // Simulate a click and verify that if full size image is load
 	    var fullSize = TestUtils.findRenderedDOMComponentWithClass(
 	      photo, 'full-size');
@@ -45,5 +45,4 @@ describe('photo component', function() {
 
 	});
 
-  });
 });
