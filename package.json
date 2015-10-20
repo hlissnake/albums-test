@@ -19,18 +19,20 @@
   "homepage": "https://github.com/hlissnake/albums-test#readme",
   "dependencies": {
     "ajax": "0.0.4",
-    "react": "^0.14.0"
+    "immutable": "^3.7.5",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
-    "gulp-sass": "^2.0.4",
     "gulp-react": "^3.1.0",
     "gulp-sass": "*",
     "gulp-uglify": "^1.4.2",
     "gulp-webpack": "^1.5.0",
+    "jsdom": "^7.0.1",
     "mocha": "^2.3.3",
     "muk": "^0.4.0",
-    "should": "^7.1.0",
-    "react-addons-test-utils": "^0.14.0"
+    "react-addons-test-utils": "^0.14.0",
+    "should": "^7.1.0"
   }
 }

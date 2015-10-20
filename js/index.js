@@ -1,5 +1,6 @@
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var Albums = require('./views/albums');
 var Models = require('./models')
 
@@ -12,8 +13,9 @@ var Container = React.createClass({
 	},
 
 	componentDidMount : function(){
+		var me = this;
 		Models.getAlbumsWithName(function(albums){
-			this.setState({
+			me.setState({
 				albums : albums
 			});
 		});
@@ -21,14 +23,14 @@ var Container = React.createClass({
 
 	render : function(){
 		return (
-			<div>
-				<Albums list={this.state.albums}></Albums>,
+			<div className="albums-container">
+				<div className={"loading-icon " + (this.state.albums.length ? 'hide' : 'show') }></div>
+				<Albums list={this.state.albums}></Albums>
 			</div>
 		)
 	}
 })
 
-React.render(
-	<Container />
-	document.getElementById('container')
+ReactDOM.render(
+	<Container />, document.getElementById('container')
 );

@@ -15,7 +15,7 @@ function onError(err){
 
 // Sass task
 gulp.task('css', function () {
-  return gulp.src('scss/*.+(scss|sass)')
+  return gulp.src('sass/*.+(scss|sass)')
     .pipe(sass().on('error', onError))
     // .pipe(code.lint())       //css lint
     // .pipe(code.minify())     //css minify

@@ -1,0 +1,131 @@
+@-webkit-keyframes circle {
+  0% {
+    -webkit-transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(359deg); } }
+
+@keyframes circle {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(359deg); } }
+
+* {
+  box-sizing: border-box; }
+
+.clearfix {
+  overflow: auto; }
+
+#container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%; }
+  #container .loading-icon {
+    position: fixed;
+    left: 50%;
+    top: 200px;
+    width: 60px;
+    height: 60px;
+    margin: -30px 0 0 -30px;
+    border: 10px solid #ccc;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-left-color: #ffe326;
+    -moz-animation: circle 1s infinite linear;
+    -o-animation: circle 1s infinite linear;
+    -webkit-animation: circle 1s infinite linear;
+    animation: circle 1s infinite linear; }
+    #container .loading-icon.show {
+      display: block; }
+    #container .loading-icon.hide {
+      display: none; }
+  #container .albums-container {
+    position: relative;
+    width: 100%;
+    min-height: 400px; }
+    @media all and (min-width: 840px) {
+      #container .albums-container {
+        width: 840px;
+        margin: 0 auto; } }
+    #container .albums-container .albums {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: auto; }
+      #container .albums-container .albums .album-list {
+        position: relative;
+        width: 400px;
+        float: left;
+        height: auto; }
+        #container .albums-container .albums .album-list .album-item {
+          width: 100%;
+          height: 80px;
+          padding: 10px;
+          background: #CDF0F6;
+          border: 1px solid #d4d4d4;
+          border-radius: 4px;
+          list-style-type: none;
+          margin: 4px;
+          padding: 12px; }
+          #container .albums-container .albums .album-list .album-item .album-item-title {
+            display: block;
+            font-size: 18px;
+            font-weight: 900; }
+          #container .albums-container .albums .album-list .album-item .album-item-name {
+            display: block;
+            color: #333;
+            font-size: 14px;
+            margin-top: 10px; }
+      #container .albums-container .albums .photo-list {
+        margin-left: 416px;
+        height: 100%; }
+        #container .albums-container .albums .photo-list.show {
+          -webkit-transform: translateX(-100%) translateZ(0);
+          -ms-transform: translateX(-100%) translateZ(0);
+          -moz-transform: translateX(-100%) translateZ(0);
+          -o-transform: translateX(-100%) translateZ(0);
+          transform: translateX(-100%) translateZ(0); }
+        #container .albums-container .albums .photo-list .photo-item {
+          position: relative;
+          width: 100%;
+          height: 300px;
+          background: #CDF0F6;
+          border: 1px solid #d4d4d4;
+          border-radius: 4px;
+          list-style-type: none;
+          margin: 4px;
+          padding: 12px; }
+          #container .albums-container .albums .photo-list .photo-item span {
+            display: inline-block;
+            padding: 10px; }
+          #container .albums-container .albums .photo-list .photo-item .thumbnail {
+            display: block;
+            width: 150px;
+            height: 150px; }
+          #container .albums-container .albums .photo-list .photo-item .full-size {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 300px;
+            height: 300px;
+            margin: -150px 0 0 -150px;
+            -webkit-transform: scale(1);
+            -ms-transform: scale(1);
+            -moz-transform: scale(1);
+            -o-transform: scale(1);
+            transform: scale(1);
+            -webkit-transition: all 0.5s ease;
+            -ms-transition: all 0.5s ease;
+            -moz-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+            transition: all 0.5s ease; }
+            #container .albums-container .albums .photo-list .photo-item .full-size.hidden {
+              -webkit-transform: scale(0);
+              -ms-transform: scale(0);
+              -moz-transform: scale(0);
+              -o-transform: scale(0);
+              transform: scale(0); }

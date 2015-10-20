@@ -28,6 +28,7 @@ Mock(Models, 'getPhotos', function(albumIds, callback){
 	});
 });
 
+// React component to test UI behavior
 var Albums = require('../build/views/albums');
 var Album = require('../build/views/album');
 var Photos = require('../build/views/photos');
@@ -37,42 +38,44 @@ var ReactTestUtils = require('react-addons-test-utils');
 var ShallowRenderer = ReactTestUtils.createRenderer();
 
 /**
- * BDD Test case for React UI, according to the Mocking Data.
+ * BDD Test case for React UI, according to the mocking data.
  **/
-describe('albums webapp by React', function(){
+describe('Albums webapp by React', function(){
 
-	describe('show albums title list', function(){
+	describe('Initialize albums title list', function(){
 
-		it('should have 4 albums in the list', function(done){
+		it('Should have 4 albums in the list', function(done){
 
+			// Get albums list with user name according to mocking data
 			Models.getAlbumsWithName(function(albums){
 
 				should(albums.length).equal(4);
 
+				// Test each album and its photos
 				for(var i = 0; i < albums.length; i++) {
 
+					// Fix closure issue
 					(function(index){
 
-						var albumElement = new Album();
+						// var albumElement = new Album();
 
-						describe('the album with id "' + index + '"', function(){
+						describe('The album with id "' + index + '"', function(){
 
-							it("show the user name of this album", function(){
-								//
+							it("Should show the user name of this album", function(){
 								should(albums[index].name).equal( MockData.users[index].name );
 							});
 
 							describe('When click this album ', function(){
 
-								it('its photos will be showed', function(){
+								it('Should its photos will be showed', function(){
 									// var dom = albumElement.refs.el;
 									// ReactTestUtils.Simulate.click(dom);
 								});
 
-								describe('when click a thumbnail', function(){
+								describe('When click a thumbnail in photos', function(){
 
-									it('show full sized photo', function(){
-
+									it('Should show full sized photo', function(){
+										
 									});
 
 								});

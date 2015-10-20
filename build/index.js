@@ -1,5 +1,6 @@
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var Albums = require('./views/albums');
 var Models = require('./models')
 
@@ -12,28 +13,24 @@ var Container = React.createClass({displayName: "Container",
 	},
 
 	componentDidMount : function(){
-		Models.getAlbums(function(albums){
-			var userids = [];
-			for(var i = 0; i < albums.length; i++) {
-
-			}
-			Models.getUser(userids, function(users){
-				this.setState({
-					albums : users
-				})
+		var me = this;
+		Models.getAlbumsWithName(function(albums){
+			me.setState({
+				albums : albums
 			});
 		});
 	},
 
 	render : function(){
 		return (
-			React.createElement("div", null, 
-				React.createElement(Albums, {list: this.state.albums}), ","
+			React.createElement("div", {className: "albums-container"}, 
+				React.createElement("div", {className: "loading-icon " + (this.state.albums.length ? 'hide' : 'show') }), 
+				React.createElement(Albums, {list: this.state.albums})
 			)
 		)
 	}
 })
 
-React.render(
-	document.getElementById('container')
+ReactDOM.render(
+	React.createElement(Container, null), document.getElementById('container')
 );

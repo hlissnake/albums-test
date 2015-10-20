@@ -56,8 +56,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	
 	var React = __webpack_require__(1);
-	var Albums = __webpack_require__(157);
-	var Models = __webpack_require__(158)
+	var ReactDOM = __webpack_require__(157);
+	var Albums = __webpack_require__(158);
+	var Models = __webpack_require__(162)
 
 	var Container = React.createClass({displayName: "Container",
 
@@ -68,30 +69,26 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 
 		componentDidMount : function(){
-			Models.getAlbums(function(albums){
-				var userids = [];
-				for(var i = 0; i < albums.length; i++) {
-
-				}
-				Models.getUser(userids, function(users){
-					this.setState({
-						albums : users
-					})
+			var me = this;
+			Models.getAlbumsWithName(function(albums){
+				me.setState({
+					albums : albums
 				});
 			});
 		},
 
 		render : function(){
 			return (
-				React.createElement("div", null, 
-					React.createElement(Albums, {list: this.state.albums}), ","
+				React.createElement("div", {className: "albums-container"}, 
+					React.createElement("div", {className: "loading-icon " + (this.state.albums.length ? 'hide' : 'show') }), 
+					React.createElement(Albums, {list: this.state.albums})
 				)
 			)
 		}
 	})
 
-	React.render(
-		document.getElementById('container')
+	ReactDOM.render(
+		React.createElement(Container, null), document.getElementById('container')
 	);
 
 
@@ -19637,16 +19634,64 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	module.exports = __webpack_require__(3);
+
+
+/***/ },
+/* 158 */
+/***/ function(module, exports, __webpack_require__) {
+
 	
 	var React = __webpack_require__(1);
+	var Album = __webpack_require__(159);
+	var Photos = __webpack_require__(160);
+	var Models = __webpack_require__(162);
 
 	var Albums = React.createClass({displayName: "Albums",
+
+		getInitialState : function(){
+			return {
+				photos : [],
+				loading : false
+			};
+		},
+
+		/**
+		 * Click the album
+		 **/
+		showPhoto : function(albumId){
+
+			this.setState({
+				'photos' : [],
+				'loading' : true
+			})
+
+			// Load photos data and transfer to Photos component
+			Models.getPhotos(albumId, function(photos){
+				this.setState({
+					'photos' : photos,
+					'loading' : false
+				})
+			}.bind(this));
+		},
 
 		render : function(){
 
 			return (
-				React.createElement("div", {className: "album-list"}
-
+				React.createElement("div", {className: "albums clearfix"}, 
+					React.createElement("h3", null, "Albums List:"), 
+					React.createElement("div", {className: "album-list"}, 
+					
+						this.props.list.map(function(album, i){
+							return (
+								React.createElement(Album, {album: album, onAlbumClick: this.showPhoto, key: i})
+							)
+						}.bind(this))
+					
+					), 
+					React.createElement(Photos, {photos: this.state.photos, loading: this.state.loading})
 				)
 			)
 		}
@@ -19655,18 +19700,175 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = Albums;
 
 /***/ },
-/* 158 */
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var io = __webpack_require__(159);
+	
+	var React = __webpack_require__(1);
+
+	var Album = React.createClass({displayName: "Album",
+
+		onClick : function(){
+			this.props.onAlbumClick(this.props.album.id);
+		},
+
+		shouldComponentUpdate : function(){
+			return false;
+		},
+
+		render : function(){
+			return (
+				React.createElement("div", {className: "album-item", onClick: this.onClick}, 
+					React.createElement("span", {className: "album-item-title"}, this.props.album.title), 
+					React.createElement("span", {className: "album-item-name"}, "User: ", this.props.album.name)
+				)
+			)
+		}
+	})
+
+	module.exports = Album;
+
+/***/ },
+/* 160 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	var React = __webpack_require__(1);
+	var Photo = __webpack_require__(161);
+
+	var Photos = React.createClass({displayName: "Photos",
+
+		getInitialState : function(){
+			return {
+				'photos' : []
+			}
+		},
+
+		// componentWillReceiveProps : function(){
+		// 	var me = this;
+		// 	if(this.props.albumId) {
+		// 		Models.getPhotos(this.props.albumId, function(photos){
+		// 			me.setState({
+		// 				'photos' : photos
+		// 			})
+		// 		});
+		// 	}
+		// },
+
+		render : function(){
+
+			return (
+				React.createElement("div", {className: "photo-list"}, 
+				
+					this.props.photos.map(function(photo, i){
+						return (
+							React.createElement(Photo, {photo: photo, key: i})
+						)
+					}), 
+				
+					React.createElement("div", {className: "loading-icon " + (this.props.loading ? 'show' : 'hide') })
+				)
+			)
+		}
+	})
+
+	module.exports = Photos;
+
+/***/ },
+/* 161 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	var React = __webpack_require__(1);
+
+	var Photo = React.createClass({displayName: "Photo",
+
+		/**
+		 * on click the thumbnail, load the full size image
+		 **/
+		onClick : function(){
+			var img = this.refs.fullSize;
+			img.onload = function(){
+				img.classList.remove('hidden');
+			}
+			img.src = this.props.photo.url;
+		},
+
+		/**
+		 * on click the full size image, hide it again
+		 **/
+		hide : function(){
+			var img = this.refs.fullSize;
+			img.classList.add('hidden');
+		},
+
+		render : function(){
+
+			return (
+				React.createElement("div", {className: "photo-item"}, 
+					React.createElement("span", null, this.props.photo.title), 
+
+					React.createElement("img", {className: "thumbnail", 
+						onClick: this.onClick, 
+						src: this.props.photo.thumbnailUrl}), 
+
+					React.createElement("img", {ref: "fullSize", 
+						className: "full-size hidden", 
+						onClick: this.hide})
+				)
+			)
+		}
+	})
+
+	module.exports = Photo;
+
+/***/ },
+/* 162 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var io = __webpack_require__(163);
 
 	var root = 'http://jsonplaceholder.typicode.com';
 
 	module.exports = {
+
+		/**
+		 * fetch the data from two http request, 
+		 * to generate albums data with its own user's name
+		 **/
+		getAlbumsWithName : function(callback){
+			var me = this,
+				userIds = [],
+				userMap = {};
+
+			this.getAlbums(function(albums){
+				for(var i = 0; i < albums.length; i++) {
+					var userId = albums[i].userId;
+					if( !userMap[userId] ) {
+						userMap[userId] = true;
+						userIds.push(userId);
+					}
+				}
+
+				me.getUsers(userIds, function(users){
+					for(var i = 0; i < albums.length; i++) {
+						var album = albums[i];
+						
+						for(var j = 0; j < users.length; j++) {
+							if(users[j].id == album.userId) {
+								album.name = users[j].name;
+							}
+						}
+					}
+
+					callback(albums);
+				});
+			});
+		},
 		
 		getAlbums : function(callback){
-			io.get( root + '/albums', [], function(data){
-				callback(data);
+			io.get( root + '/albums', [], function(albums){
+				callback(albums);
 			});
 		},
 
@@ -19679,11 +19881,8 @@ return /******/ (function(modules) { // webpackBootstrap
 			});
 		},
 
-		getPhotos : function(albumIds, callback){
-			for(var i = 0; i < albumIds.length; i++) {
-				albumIds[i] = 'albumId=' + albumIds[i];
-			}
-			io.get( root + '/photos?' + albumIds.join('&'), [], function(data){
+		getPhotos : function(albumId, callback){
+			io.get( root + '/photos?albumId=' + albumId, { }, function(data){
 				callback(data);
 			});
 		}
@@ -19691,12 +19890,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 159 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* See license.txt for terms of usage */
 
-	var _ = __webpack_require__(160);
+	var _ = __webpack_require__(164);
 
 	exports.get = function(url, params, cb) {
 	    exports.send(url, 'GET', params, cb);
@@ -19815,7 +20014,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 160 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.8.3

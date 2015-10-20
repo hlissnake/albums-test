@@ -4,6 +4,10 @@ var root = 'http://jsonplaceholder.typicode.com';
 
 module.exports = {
 
+	/**
+	 * fetch the data from two http request, 
+	 * to generate albums data with its own user's name
+	 **/
 	getAlbumsWithName : function(callback){
 		var me = this,
 			userIds = [],
@@ -49,11 +53,8 @@ module.exports = {
 		});
 	},
 
-	getPhotos : function(albumIds, callback){
-		for(var i = 0; i < albumIds.length; i++) {
-			albumIds[i] = 'albumId=' + albumIds[i];
-		}
-		io.get( root + '/photos?' + albumIds.join('&'), [], function(data){
+	getPhotos : function(albumId, callback){
+		io.get( root + '/photos?albumId=' + albumId, { }, function(data){
 			callback(data);
 		});
 	}

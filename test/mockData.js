@@ -1,4 +1,5 @@
-// Mocking Data
+
+// Mocking data for albums
 exports.albums = [
 	{
 		"userId": 1,
@@ -22,6 +23,7 @@ exports.albums = [
 	}
 ];
 
+// Mocking data for users
 exports.users = [
 	{
 		"id": 1,
@@ -45,6 +47,7 @@ exports.users = [
   }
 ];
 
+// Mocking data for photos
 exports.photos = [
   {
     "albumId": 1,
