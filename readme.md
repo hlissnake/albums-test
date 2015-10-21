@@ -2,6 +2,8 @@
 
 You can see the unit-testing result in Travis [![Travis CI](https://travis-ci.org/hlissnake/albums-test.svg?branch=master)](https://travis-ci.org/hlissnake/albums-test)
 
+Application's online demo [hlissnake.github.io/albums-test/](http://hlissnake.github.io/albums-test/)
+
 #### Architecture:
 * React.js for UI Components.
 * SCSS preprocessor of css.
