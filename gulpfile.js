@@ -41,7 +41,7 @@ gulp.task('pack', ['js', 'css'], function(){
       }
     }))
     .on('error', onError)
-    // .pipe(uglify())
+    .pipe(uglify())
     .on('error', onError)
     .pipe(gulp.dest('build/'));
 })

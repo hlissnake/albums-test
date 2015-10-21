@@ -19,7 +19,7 @@ var Photo = React.createClass({
 	 * on click the full size image, hide it again
 	 **/
 	hide : function(){
-		var img = this.refs.fullSize;
+		var img = this.refs.fullsize;
 		img.classList.add('hidden');
 	},
 
